@@ -107,11 +107,11 @@ Data Processing: SheetJS (XLSX)
 
 APIs:
 
-    IP 数据: IP2Location.io
+  IP 数据: IP2Location.io
 
-    翻译: Google Translate API (via Worker Proxy)
+  翻译: Google Translate API (via Worker Proxy)
 
-    国旗: Flagcdn
+  国旗: Flagcdn
 
 ⚠️ 注意事项
 
@@ -122,6 +122,7 @@ APIs:
 浏览器兼容性：建议使用 Chrome、Edge 或 Safari 等现代浏览器，部分旧版浏览器可能不支持 navigator.clipboard 复制功能。
 
 如果您觉得好用，请给个 Star 吧！
+
 
 
 
