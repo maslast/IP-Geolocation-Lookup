@@ -5,7 +5,7 @@
 ![alt text](https://img.shields.io/badge/Cloudflare-Workers-orange?logo=cloudflare)
 
 这是一个基于 Cloudflare Workers 和 KV Storage 的 IP 批量检测工具。它支持批量查询 IP 地址的地理位置、ISP、代理状态等信息，并支持导出 Excel/CSV。
-===
+=
 <p align="center">
   <strong>在线体验:</strong> <a href="https://ip.li0il.ggff.net/">https://ip.li0il.ggff.net/</a>
 </p>
@@ -19,7 +19,7 @@
 ![管理页面](./img1.png)
 
 ✨ 功能特性
----
+-
 ● 🚀 端口完整保留：支持输入 1.1.1.1:8080 格式，在查询、显示、导出过程中全程保留端口号。
 
 ● 🌐 自动翻译代理：内置 Worker 后端翻译代理，解决国内环境无法直接请求 Google 翻译 API 的问题，实现地名自动中文化。
@@ -33,13 +33,13 @@
   ◦ 响应式设计：完美适配手机与电脑端。
 
 ● 📂 文件导入与导出：
----
+-
   ◦ 支持直接拖入或选择 .txt / .csv 文件。
 
   ◦ 支持一键导出结果至 Excel (.xlsx) 或 CSV 格式。
 
 ● 🛡️ 智能分类：
----
+-
   ◦ 自动识别并区分“直连”与“代理” IP。
 
   ◦ 自动将港澳台归类至中国。
@@ -47,7 +47,7 @@
   ◦ 智能去重重复的行政区划名称。
 
 🛠️ 部署指南
----
+-
 1. 准备工作
 
 ● 拥有一个 Cloudflare 账号。
@@ -123,6 +123,7 @@ APIs:
   ◦ 浏览器兼容性：建议使用 Chrome、Edge 或 Safari 等现代浏览器，部分旧版浏览器可能不支持 navigator.clipboard 复制功能。
 
   ◦ 如果您觉得好用，请给个 Star 吧！
+
 
 
 
