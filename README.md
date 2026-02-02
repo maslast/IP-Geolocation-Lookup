@@ -17,119 +17,58 @@
 ![主页面](./img.png)
 
 ![管理页面](./img1.png)
-✅ 主要特性：
-
-🚀 Serverless 架构：无需服务器，完全运行在 Cloudflare 边缘节点。
-
-🔒 隐私保护：前端不直接请求第三方 API，通过 Worker 代理转发，隐藏真实 IP 和 API Key。
-
-🔑 灵活的 Key 策略：支持 用户自定义 Key > 服务端环境变量 Key > 官方免费无 Key 模式 三级自动切换。
-
-📊 实时额度显示：自动解析 API 响应头，实时展示剩余查询配额（兼容点数/频次限制）。
-
-📝 KV 数据管理：内置可视化后台，可在线修改国家/地区翻译和用途映射，实时生效。
-
-📂 批量处理：支持复制粘贴或导入 .txt/.csv 文件，多线程并发查询。
-
-🛠️ 部署教程 (Deployment)
+✨ 功能特性
+🚀 端口完整保留：支持输入 1.1.1.1:8080 格式，在查询、显示、导出过程中全程保留端口号。
+🌐 自动翻译代理：内置 Worker 后端翻译代理，解决国内环境无法直接请求 Google 翻译 API 的问题，实现地名自动中文化。
+📊 交互式 UI：
+国家分组折叠：点击国家标题可展开或收起该组下的所有 IP。
+单击复制：在表格中点击任何 IP:端口 即可直接复制到剪贴板。
+响应式设计：完美适配手机与电脑端。
+📂 文件导入与导出：
+支持直接拖入或选择 .txt / .csv 文件。
+支持一键导出结果至 Excel (.xlsx) 或 CSV 格式。
+🛡️ 智能分类：
+自动识别并区分“直连”与“代理” IP。
+自动将港澳台归类至中国。
+智能去重重复的行政区划名称。
+🛠️ 部署指南
 1. 准备工作
-
-注册一个 Cloudflare 账号。
-
-(可选) 注册 ip2location.io 获取 API Key（免费版也可以）。
-
-2. 创建 Cloudflare KV
-
-我们需要一个 KV 命名空间来存储翻译和映射数据。
-
-进入 Cloudflare Dashboard -> Workers & Pages -> KV.
-
-点击 Create a Namespace。
-
-命名为 IP_KV (或者其他你喜欢的名字)，点击 Add。
-
-记住这个 Namespace ID，稍后配置会用到。
-
-3. 创建 Worker
-
-进入 Workers & Pages -> Overview -> Create Application.
-
-点击 Create Worker，修改名称（例如 ip-tools），点击 Deploy。
-
-点击 Edit code，将本项目中的 worker.js 代码完整复制进去。
-
+拥有一个 Cloudflare 账号。
+(可选) 注册 IP2Location.io 获取免费的 API Key (免费版每日支持 500 次查询)。
+2. 部署步骤
+登录 Cloudflare 控制台，进入 Workers & Pages。
+点击 Create Application -> Create Worker。
+为你的 Worker 命名（例如 ip-tools），点击 Deploy。
+点击 Edit Code，将本项目的 worker.js 代码全文粘贴进去。
+点击 Save and Deploy。
+3. 配置 API Key (可选但推荐)
+如果不配置 Key，将使用 IP2Location 的共享频率限制，可能导致查询失败。
+在 Worker 的控制面板中点击 Settings -> Variables。
+在 Environment Variables 处点击 Add variable。
+变量名填入：IP_API_KEY。
+值填入：你的 IP2Location API Key。
 点击 Save and deploy。
-
-4. 绑定 KV 数据库
-
-在 Worker 编辑页面，点击顶部的 Settings -> Variables.
-
-找到 KV Namespace Bindings。
-
-点击 Add binding：
-
-Variable name: IP_KV (必须填这个，因为代码里写死是这个)。
-
-KV Namespace: 选择你在第 2 步创建的那个数据库。
-
-点击 Save and deploy。
-
-5. 配置环境变量 (可选)
-
-为了实现“隐藏 API Key”和“后台管理保护”，你需要设置环境变量。
-
-在 Settings -> Variables -> Environment Variables 中添加：
-
-变量名	说明	示例值
-IP_API_KEY	(可选) IP2Location 的 API Key，用于兜底查询。	ABC12345...
-ADMIN_TOKEN	(可选) 后台管理页面的访问密码。	mypassword123
-
-保存并重新部署。
-
-📖 使用说明 (Usage)
-🏠 前台使用
-
-访问你的 Worker 域名（例如 https://ip-tools.your-name.workers.dev）。
-
-输入 IP：在文本框粘贴 IP 列表，或点击“导入文件”。
-
-API Key 设置：
-
-如果你有自己的 Key，可以在右上角输入。
-
-如果留空，系统会自动尝试使用服务端配置的 Key。
-
-如果服务端也没配置，将使用官方免费模式（每日 500 次）。
-
-查看结果：点击“开始检测”，下方会显示详细表格。
-
-导出：检测完成后，可点击导出 Excel 或 CSV。
-
-⚙️ 后台管理 (KV Mapping)
-
-访问 https://你的域名/admin。
-
-功能：在这里你可以自定义“国家/地区”的中文翻译，以及“Usage Type”的中文解释。
-
-保存：修改完成后，点击右上角“保存并生效”。
-
-鉴权：系统会提示输入密码，请输入你在环境变量 ADMIN_TOKEN 中设置的值（默认为 123456）。
-
-📝 常见问题 (FAQ)
-
-Q: 为什么显示剩余额度是 "未知/不限"？
-A: 如果你是 ip2location.io 的免费订阅或包月用户，API 响应头中可能不包含剩余点数信息。这是正常现象，依然可以正常使用。
-
-Q: 如何获取映射数据的默认值？
-A: 首次部署时 KV 是空的，代码内置了一份默认的 DEFAULT_DATA。你可以直接访问 /admin 点击保存，将其写入 KV。
-
-Q: 是否支持其他 IP 库？
-A: 目前代码深度绑定 ip2location.io 的 API 格式。如果需要支持 ipinfo.io 或其他库，需要修改 worker.js 中的 fetch 逻辑和数据解析逻辑。
-
-📄 License
-
-
-MIT License. Feel free to use and modify.
+📖 使用说明
+输入数据：在文本框内直接粘贴包含 IP 的文本（程序会自动识别 IP 和端口），或点击“导入文件”上传。
+设置 Key：如果你没有在后台配置环境变量，可以在页面顶部的 API Key 输入框临时填入。
+开始检测：点击“开始检测”按钮，程序将以每组 5 个请求的并发速度进行查询。
+查看结果：
+点击国家标题行：展开或隐藏该国家的 IP 列表。
+点击IP 地址：提示“已复制”并自动复制到剪贴板。
+导出数据：点击统计面板右侧的“导出 Excel”或“导出 CSV”。
+🧩 技术栈
+Runtime: Cloudflare Workers (V8 Engine)
+Frontend: HTML5, Tailwind CSS, JavaScript (ES6+)
+Icons: Lucide Icons
+Data Processing: SheetJS (XLSX)
+APIs:
+IP 数据: IP2Location.io
+翻译: Google Translate API (via Worker Proxy)
+国旗: Flagcdn
+⚠️ 注意事项
+频率限制：IP2Location 免费版 API 有每日额度限制，请合理使用。
+隐私说明：本工具所有查询请求均通过 Cloudflare Worker 中转，不会在浏览器端暴露你的 API Key（如果已配置为环境变量）。
+浏览器兼容性：建议使用 Chrome、Edge 或 Safari 等现代浏览器，部分旧版浏览器可能不支持 navigator.clipboard 复制功能。
 
 
 
