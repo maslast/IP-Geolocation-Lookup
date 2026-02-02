@@ -16,7 +16,6 @@
 
 ![主页面](./img.png)
 
-![管理页面](./img1.png)
 
 ✨ 功能特性
 -
@@ -123,6 +122,7 @@ APIs:
   * 浏览器兼容性：建议使用 Chrome、Edge 或 Safari 等现代浏览器，部分旧版浏览器可能不支持 navigator.clipboard 复制功能。
 
   * 如果您觉得好用，请给个 Star 吧！
+
 
 
 
