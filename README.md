@@ -48,21 +48,27 @@
 🛠️ 部署指南
 
 1. 准备工作
-2. 拥有一个 Cloudflare 账号。
-3. (可选) 注册 IP2Location.io 获取免费的 API Key (免费版每日支持 500 次查询)。
-4. 部署步骤
-登录 Cloudflare 控制台，进入 Workers & Pages。
-点击 Create Application -> Create Worker。
-为你的 Worker 命名（例如 ip-tools），点击 Deploy。
-点击 Edit Code，将本项目的 worker.js 代码全文粘贴进去。
-点击 Save and Deploy。
+  拥有一个 Cloudflare 账号。
+  (可选) 注册 IP2Location.io 获取免费的 API Key (免费版每日支持 500 次查询)。
+
+3. 部署步骤
+
+  登录 Cloudflare 控制台，进入 Workers & Pages。
+  
+  点击 Create Application -> Create Worker。
+  
+  为你的 Worker 命名（例如 ip-tools），点击 Deploy。
+  
+  点击 Edit Code，将本项目的 worker.js 代码全文粘贴进去。
+  
+  点击 Save and Deploy。
 5. 配置 API Key (可选但推荐)
-如果不配置 Key，将使用 IP2Location 的共享频率限制，可能导致查询失败。
-在 Worker 的控制面板中点击 Settings -> Variables。
-在 Environment Variables 处点击 Add variable。
-变量名填入：IP_API_KEY。
-值填入：你的 IP2Location API Key。
-点击 Save and deploy。
+  如果不配置 Key，将使用 IP2Location 的共享频率限制，可能导致查询失败。
+  在 Worker 的控制面板中点击 Settings -> Variables。
+  在 Environment Variables 处点击 Add variable。
+  变量名填入：IP_API_KEY。
+  值填入：你的 IP2Location API Key。
+  点击 Save and deploy。
 📖 使用说明
 输入数据：在文本框内直接粘贴包含 IP 的文本（程序会自动识别 IP 和端口），或点击“导入文件”上传。
 设置 Key：如果你没有在后台配置环境变量，可以在页面顶部的 API Key 输入框临时填入。
@@ -84,6 +90,7 @@ IP 数据: IP2Location.io
 频率限制：IP2Location 免费版 API 有每日额度限制，请合理使用。
 隐私说明：本工具所有查询请求均通过 Cloudflare Worker 中转，不会在浏览器端暴露你的 API Key（如果已配置为环境变量）。
 浏览器兼容性：建议使用 Chrome、Edge 或 Safari 等现代浏览器，部分旧版浏览器可能不支持 navigator.clipboard 复制功能。
+
 
 
 
