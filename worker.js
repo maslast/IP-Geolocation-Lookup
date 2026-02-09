@@ -59,7 +59,8 @@ const USAGE_MAP = {
           const text = body.text;
           if (!text) return new Response(JSON.stringify({}), { headers: corsHeaders });
   
-          const googleUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=${encodeURIComponent(text)}`;
+          // [Fix] 替换为 translate.google.com 以解决 Cloudflare IP 被 googleapis 屏蔽的问题
+          const googleUrl = `https://translate.google.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=${encodeURIComponent(text)}`;
           
           const resp = await fetch(googleUrl, {
             headers: {
